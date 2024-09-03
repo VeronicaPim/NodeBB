@@ -27,6 +27,20 @@ define('forum/header/unread', ['hooks'], function (hooks) {
 					return;
 				}
 
+				handleUnreadTopics(tid);
+
+			function handleUnreadTopics(tid) {
+				if (!unreadTopics[''][tid] || !unreadTopics.new[tid] ||
+				!unreadTopics.watched[tid] || !unreadTopics.unreplied[tid]) {
+				markTopicsUnread(tid);
+			}
+
+			if (!unreadTopics[''][tid]) {
+				increaseUnreadCount('');
+				unreadTopics[''][tid] = true;
+			}
+}
+
 				const tid = post.topic.tid;
 				if (!unreadTopics[''][tid] || !unreadTopics.new[tid] ||
 					!unreadTopics.watched[tid] || !unreadTopics.unreplied[tid]) {
