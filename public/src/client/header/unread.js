@@ -17,6 +17,10 @@ define('forum/header/unread', ['hooks'], function (hooks) {
 			}
 
 			const post = data.posts[0];
+			if (isUserPostOrNotWatching(post)) {
+				return;
+			}
+
 				if (parseInt(post.uid, 10) === parseInt(app.user.uid, 10) ||
 					(!post.topic.isFollowing && post.categoryWatchState !== watchStates.watching)
 				) {
@@ -53,6 +57,11 @@ define('forum/header/unread', ['hooks'], function (hooks) {
 
 		function isValidPostData(data, unreadTopics) {
 			return data && data.posts && data.posts.length && unreadTopics;
+		}
+
+		function isUserPostOrNotWatching(post) {
+			return parseInt(post.uid, 10) === parseInt(app.user.uid, 10) ||
+				(!post.topic.isFollowing && post.categoryWatchState !== watchStates.watching);
 		}
 
 		function increaseUnreadCount(filter) {
